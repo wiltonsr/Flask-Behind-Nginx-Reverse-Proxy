@@ -1,0 +1,31 @@
+version: '3'
+services:
+  proxy:
+    container_name: nginx
+    build: ./nginx
+    restart: always
+    ports:
+      - "80:80"
+    links:
+      - flask1
+      - flask2
+    networks:
+      - code-network
+
+  flask1:
+    container_name: flask1
+    build: ./flask
+    ports:
+      - "5000:5000"
+    networks:
+      - code-network
+
+  flask2:
+    container_name: flask2
+    build: ./flask
+    networks:
+      - code-network
+
+networks:
+  code-network:
+    driver: bridge
